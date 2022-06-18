@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "example",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_development.dart",
+            "args": [
+                "--target","lib/main_development.dart",
+                "--flavor","development",
+                "-d","chrome",
+                "--web-port","8008",
+                "--web-renderer","html",
+            ]
+            
+        }
+    ]
+}
