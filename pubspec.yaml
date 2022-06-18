@@ -1,10 +1,14 @@
 name: tele_web_app
-description: Allows communication between your bot and the Web App built in Flutter displayed inside Telegram.
+description: Allows communication between your bot and the Web App built in
+  Flutter displayed inside Telegram.
 version: 0.0.1
 publish_to: none
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  js: ^0.6.4
 
 dev_dependencies:
   coverage: ^1.1.0
