@@ -60,15 +60,25 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
 
   /// Sets the app event handler.
   ///
-  /// Check the list of available events.
-  void onEvent(String eventType, void Function() eventHandler) {
-    // TODO(yeikel16): implement onEvent method.
-  }
+  /// Check the list of available events:
+  ///
+  /// - [WebAppEventType.themeChanged]
+  ///
+  ///   {@macro event_type_theme_changed}
+  ///
+  /// - [WebAppEventType.viewportChanged]
+  ///
+  ///   {@macro event_type_viewport_changed}
+  ///
+  /// - [WebAppEventType.mainButtonClicked]
+  ///
+  ///   {@macro event_type_main_button_clicked}
+  void onEvent(WebAppEventType eventType, Function eventHandler) =>
+      jsObject.onEvent(eventType.name, allowInterop(() => eventHandler));
 
   /// Deletes a previously set event handler.
-  void offEvent(String eventType, void Function() eventHandler) {
-    // TODO(yeikel16): implement offEvent method.
-  }
+  void offEvent(WebAppEventType eventType, Function eventHandler) =>
+      jsObject.offEvent(eventType.name, allowInterop(() => eventHandler));
 
   /// Send data to the bot.
   ///
@@ -299,4 +309,39 @@ class WebAppUser extends JsObjectWrapper<tele.WebAppUserJsImpl?> {
   /// The photo can be in .jpeg or .svg formats.
   /// Only returned for Web Apps launched from the attachment menu.
   String? get photoUrl => jsObject?.photo_url;
+}
+
+/// {@template webapp_event_type}
+/// Types of events that come from Telegram app.
+/// {@endtemplate}
+enum WebAppEventType {
+  /// {@template event_type_theme_changed}
+  /// Occurs whenever theme settings are changed in the user's Telegram app
+  /// (including switching to night mode).
+  ///
+  /// `eventHandler` receives no parameters, new theme settings and color
+  /// scheme can be received via this.themeParams and this.colorScheme
+  /// respectively.
+  /// {@endtemplate}
+  themeChanged,
+
+  /// {@template event_type_viewport_changed}
+  /// Occurs when the visible section of the Web App is changed.
+  ///
+  /// `eventHandler` receives an parameter with the single field
+  /// `isStateStable`.
+  ///
+  /// If `isStateStable = true`, the resizing of the Web App is finished.
+  /// If it is `false`, the resizing is ongoing (the user is expanding or
+  /// collapsing the Web App or an animated object is playing).
+  /// The current value of the visible section’s height is available
+  /// in `this.viewportHeight`.
+  /// {@endtemplate}
+  viewportChanged,
+
+  /// {@template event_type_main_button_clicked}
+  /// Occurs when the main button is pressed.
+  /// eventHandler receives no parameters.
+  /// {@endtemplate}
+  mainButtonClicked
 }
