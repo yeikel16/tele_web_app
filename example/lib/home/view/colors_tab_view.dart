@@ -37,17 +37,20 @@ class ColorsTabView extends StatelessWidget {
 
                 return InkWell(
                   onTap: () {
-                    tele.mainButton.setParams(
-                      text: colorName,
-                      color: '#$rgb',
-                      isActive: true,
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(colorName),
-                        duration: const Duration(seconds: 2),
-                      ),
-                    );
+                    tele.mainButton
+                      ..setParams(
+                        text: colorName,
+                        color: '#$rgb',
+                      )
+                      ..show()
+                      ..onClick(() {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(colorName),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      });
                   },
                   child: Container(
                     color: color,
