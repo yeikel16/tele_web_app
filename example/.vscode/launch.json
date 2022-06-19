@@ -8,10 +8,10 @@
             "name": "example",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main_development.dart",
+            "program": "lib/main.dart",
             "args": [
-                "--target","lib/main_development.dart",
-                "--flavor","development",
+                // "--target","lib/main_development.dart",
+                // "--flavor","development",
                 "-d","chrome",
                 "--web-port","8008",
                 "--web-renderer","html",
