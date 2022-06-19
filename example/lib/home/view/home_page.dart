@@ -5,26 +5,20 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:example/home/bloc/favorite_color_bloc.dart';
 import 'package:example/home/view/view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tele_web_app/tele_web_app.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FavoriteColorBloc(),
-      child: const InfoView(),
-    );
-  }
+  Widget build(BuildContext context) => InfoView();
 }
 
 class InfoView extends StatelessWidget {
-  const InfoView({super.key});
-
+  InfoView({super.key});
+  final tele = TeleWebApp();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -40,24 +34,11 @@ class InfoView extends StatelessWidget {
             ],
           ),
         ),
-        body: BlocListener<FavoriteColorBloc, String>(
-          listenWhen: (previous, current) => previous != current,
-          listener: (context, state) {
-            if (state.isNotEmpty) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state),
-                  duration: const Duration(seconds: 2),
-                ),
-              );
-            }
-          },
-          child: const TabBarView(
-            children: <Widget>[
-              ColorsTabView(),
-              InfoTabView(),
-            ],
-          ),
+        body: TabBarView(
+          children: <Widget>[
+            ColorsTabView(),
+            const InfoTabView(),
+          ],
         ),
       ),
     );

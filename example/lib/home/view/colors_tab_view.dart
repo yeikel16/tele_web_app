@@ -1,11 +1,10 @@
-import 'package:example/home/bloc/favorite_color_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tele_web_app/tele_web_app.dart';
 
 class ColorsTabView extends StatelessWidget {
-  const ColorsTabView({
-    super.key,
-  });
+  ColorsTabView({super.key});
+
+  final tele = TeleWebApp();
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +27,33 @@ class ColorsTabView extends StatelessWidget {
               itemCount: Colors.primaries.length,
               itemBuilder: (context, index) {
                 final color = Colors.primaries[index];
+                final rgb = color.value
+                    .toRadixString(16)
+                    .padLeft(8, '0')
+                    .substring(2)
+                    .toUpperCase();
+
                 final colorName = colorsName[index].toUpperCase();
+
                 return InkWell(
-                  onTap: () => context.read<FavoriteColorBloc>().add(
-                        PickColor(
-                          color: 'Color: $colorName',
-                        ),
+                  onTap: () {
+                    tele.mainButton.setParams(
+                      text: colorName,
+                      color: '#$rgb',
+                      isActive: true,
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(colorName),
+                        duration: const Duration(seconds: 2),
                       ),
+                    );
+                  },
                   child: Container(
                     color: color,
                     height: 80,
                     child: Center(
-                      child: Text(
-                        colorName,
-                        // style: TextStyle(color: Colors.white),
-                      ),
+                      child: Text(colorName),
                     ),
                   ),
                 );

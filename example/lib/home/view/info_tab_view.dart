@@ -38,10 +38,7 @@ class _InfoTabViewState extends State<InfoTabView> {
               'initData: ${tele.initData}',
               style: const TextStyle(fontSize: 18),
             ),
-            Text(
-              'viewportHeight: ${tele.viewportHeight}',
-              style: const TextStyle(fontSize: 18),
-            ),
+            ViewPortHight(tele: tele),
             Text(
               'viewportStableHeight: ${tele.viewportStableHeight}',
               style: const TextStyle(fontSize: 18),
@@ -206,6 +203,42 @@ class _InfoTabViewState extends State<InfoTabView> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ViewPortHight extends StatefulWidget {
+  const ViewPortHight({
+    super.key,
+    required this.tele,
+  });
+
+  final TeleWebApp tele;
+
+  @override
+  State<ViewPortHight> createState() => _ViewPortHightState();
+}
+
+class _ViewPortHightState extends State<ViewPortHight> {
+  double? viewportHeight;
+
+  @override
+  void initState() {
+    widget.tele.onEvent(WebAppEventType.viewportChanged, (bool isStateStable) {
+      if (!isStateStable) {
+        setState(() {
+          viewportHeight = widget.tele.viewportHeight;
+        });
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      'viewportHeight: ${viewportHeight ?? widget.tele.viewportHeight}',
+      style: const TextStyle(fontSize: 18),
     );
   }
 }
