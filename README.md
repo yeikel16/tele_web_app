@@ -6,7 +6,7 @@
 It enables communication between your [bot][bot_link] and the Flutter-embedded [Web App][web_app_link] displayed inside [Telegram][telegram_link] by making use of interoperability between *Dart* and *JavaScript*.
 
  🚧🚩**This package is still under development, it is not recommended to use it in a production environment.**
-> The package should only be used on the *Web platform*. This package makes use of the interoperability between *Dart* and *JavaScript*
+> The package should only be used on the *Web platform*.
 
 ## Install
 
