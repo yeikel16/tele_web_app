@@ -41,6 +41,7 @@ class ColorsTabView extends StatelessWidget {
                       ..setParams(
                         text: colorName,
                         color: '#$rgb',
+                        isVisible: true,
                       )
                       ..show()
                       ..onClick(() {
@@ -50,6 +51,10 @@ class ColorsTabView extends StatelessWidget {
                             duration: const Duration(seconds: 2),
                           ),
                         );
+                        tele.sendData({
+                          'colorName': colorName,
+                          'rgb': rgb,
+                        });
                       });
                   },
                   child: Container(
