@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:tele_web_app/tele_web_app.dart';
 
@@ -51,10 +53,12 @@ class ColorsTabView extends StatelessWidget {
                             duration: const Duration(seconds: 2),
                           ),
                         );
-                        tele.sendData({
-                          'colorName': colorName,
-                          'rgb': rgb,
-                        });
+                        tele.sendData(
+                          jsonEncode({
+                            'colorName': colorName,
+                            'rgb': rgb,
+                          }),
+                        );
                       });
                   },
                   child: Container(
