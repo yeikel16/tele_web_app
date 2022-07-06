@@ -89,7 +89,7 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   ///
   /// This method is only available for Web Apps launched via a
   /// [Keyboard button](https://core.telegram.org/bots/webapps#keyboard-button-web-apps).
-  void sendData(dynamic data) => jsObject.sendData(data);
+  void sendData(String data) => jsObject.sendData(data);
 
   /// Informs the Telegram app that the Web App is ready to be displayed.
   ///

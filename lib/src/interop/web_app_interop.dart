@@ -27,7 +27,7 @@ abstract class WebAppJsImpl {
   external MainButtonJsImpl get MainButton;
   external void onEvent(String eventType, void Function() eventHandler);
   external void offEvent(String eventType, void Function() eventHandler);
-  external void sendData(dynamic data);
+  external void sendData(String data);
   external void ready();
   external void expand();
   external void close();
