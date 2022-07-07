@@ -39,26 +39,26 @@ class ColorsTabView extends StatelessWidget {
 
                 return InkWell(
                   onTap: () {
-                    tele.mainButton.setParams(
-                      text: colorName,
-                      color: '#$rgb',
-                      isVisible: true,
+                    tele.sendData(
+                      jsonEncode({
+                        'colorName': colorName,
+                        'rgb': rgb,
+                      }),
                     );
-                    tele.mainButton.show();
-                    tele.mainButton.onClick(() {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(colorName),
-                          duration: const Duration(seconds: 2),
-                        ),
-                      );
-                      tele.sendData(
-                        jsonEncode({
-                          'colorName': colorName,
-                          'rgb': rgb,
-                        }),
-                      );
-                    });
+                    // tele.mainButton.setParams(
+                    //   text: colorName,
+                    //   color: '#$rgb',
+                    //   isVisible: true,
+                    // );
+                    // tele.mainButton.show();
+                    // tele.mainButton.onClick(() {
+                    //   ScaffoldMessenger.of(context).showSnackBar(
+                    //     SnackBar(
+                    //       content: Text(colorName),
+                    //       duration: const Duration(seconds: 2),
+                    //     ),
+                    //   );
+                    // });
                   },
                   child: Container(
                     color: color,
