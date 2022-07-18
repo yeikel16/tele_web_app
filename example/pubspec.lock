@@ -145,7 +145,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "4d69f4ccf0551129e01e374091b95cd3b190587a"
+      resolved-ref: "17a9644bbe0ba802e047306e16338e5c3fc687e1"
       url: "https://github.com/yeikel16/tele_web_app.git"
     source: git
     version: "0.0.1"
