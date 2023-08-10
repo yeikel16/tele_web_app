@@ -22,6 +22,8 @@ abstract class WebAppJsImpl {
   external WebAppInitDataJsImpl get initDataUnsafe;
   external String get colorScheme;
   external String get version;
+  external String get headerColor;
+  external String get backgroundColor;
   external bool isVersionAtLeast(String version);
   external String get platform;
   external ThemeParamsJsImpl get themeParams;
@@ -37,6 +39,7 @@ abstract class WebAppJsImpl {
   external void close();
   external void setHeaderColor(String color);
   external void setBackgroundColor(String color);
+  external bool isClosingConfirmationEnabled();
 }
 
 @JS()
@@ -68,6 +71,7 @@ abstract class MainButtonJsImpl {
   external bool get isProgressVisible;
   external void setText(String text);
   external void onClick(void Function() callback);
+  external void offClick(void Function() callback);
   external void show();
   external void hide();
   external void enable();
@@ -157,4 +161,5 @@ abstract class WebAppUserJsImpl {
   external String? get username;
   external String? get language_code;
   external String? get photo_url;
+  external bool? get is_premium;
 }

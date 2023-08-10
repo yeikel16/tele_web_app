@@ -117,6 +117,17 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// Close the Web App.
   void close() => jsObject.close();
 
+  ///	Current header color in the #RRGGBB format.
+  String get headerColor => jsObject.headerColor;
+
+  ///	Current background color in the #RRGGBB format.
+  String get backgroundColor => jsObject.backgroundColor;
+
+  /// `True`, if the confirmation dialog is enabled while the user is trying to
+  /// close the Web App. `False`, if the confirmation dialog is disabled.
+  bool isClosingConfirmationEnabled() =>
+      jsObject.isClosingConfirmationEnabled();
+
   /// A method that sets the app header color.
   ///
   /// Support in Bot API >= 6.1+
@@ -214,6 +225,9 @@ class MainButton extends JsObjectWrapper<tele.MainButtonJsImpl> {
           is_visible: isVisible,
         ),
       );
+
+  /// A method that removes the button press event handler.
+  void offClick(void Function() callback) => jsObject.offClick(callback);
 }
 
 /// {@template theme_params}
@@ -334,6 +348,9 @@ class WebAppUser extends JsObjectWrapper<tele.WebAppUserJsImpl?> {
   /// The photo can be in .jpeg or .svg formats.
   /// Only returned for Web Apps launched from the attachment menu.
   String? get photoUrl => jsObject?.photo_url;
+
+  /// True, if this user is a Telegram Premium user.
+  bool get isPremium => jsObject?.is_premium ?? false;
 }
 
 /// {@template webapp_event_type}
