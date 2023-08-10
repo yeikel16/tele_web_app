@@ -1,4 +1,5 @@
-// ignore_for_file: public_member_api_docs, non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, non_constant_identifier_names,
+// ignore_for_file: avoid_positional_boolean_parameters
 
 @JS('Telegram')
 library web_app;
@@ -66,7 +67,6 @@ abstract class MainButtonJsImpl {
   external void hide();
   external void enable();
   external void disable();
-  // ignore: avoid_positional_boolean_parameters
   external void showProgress(bool leaveActive);
   external void hideProgress();
   external void setParams(MainButtonParams params);
