@@ -78,6 +78,30 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   ///
   /// - [WebAppEventType.mainButtonClicked]
   ///
+  ///   {@macro event_type_back_button_clicked}
+  ///
+  /// - [WebAppEventType.backButtonClicked]
+  ///
+  ///   {@macro event_type_settings_button_clicked}
+  ///
+  /// - [WebAppEventType.settingsButtonClicked]
+  ///
+  ///   {@macro event_type_invoice_closed}
+  ///
+  /// - [WebAppEventType.invoiceClosed]
+  ///
+  ///   {@macro event_type_popup_closed}
+  ///
+  /// - [WebAppEventType.popupClosed]
+  ///
+  ///   {@macro event_type_qr_text_received}
+  ///
+  /// - [WebAppEventType.qrTextReceived]
+  ///
+  ///   {@macro event_type_clipboard_text_received}
+  ///
+  /// - [WebAppEventType.clipboardTextReceived]
+  ///
   ///   {@macro event_type_main_button_clicked}
   void onEvent(WebAppEventType eventType, Function eventHandler) =>
       jsObject.onEvent(eventType.name, allowInterop(() => eventHandler));
@@ -385,5 +409,74 @@ enum WebAppEventType {
   /// Occurs when the main button is pressed.
   /// eventHandler receives no parameters.
   /// {@endtemplate}
-  mainButtonClicked
+  mainButtonClicked,
+
+  /// {@template event_type_back_button_clicked}
+  /// Occurrs when the back button is pressed.
+  ///
+  /// The `eventHandler` receives no parameters.
+  ///
+  /// Support in Bot API >= 6.1+
+  /// {@endtemplate}
+  backButtonClicked,
+
+  /// {@template event_type_settings_button_clicked}
+  /// Occurrs when the Settings item in context menu is pressed.
+  ///
+  /// The `eventHandler` receives no parameters.
+  ///
+  /// Support in Bot API >= 6.1+
+  /// {@endtemplate}
+  settingsButtonClicked,
+
+  /// {@template event_type_invoice_closed}
+  /// Occurrs when the opened invoice is closed.
+  ///
+  /// The `eventHandler` receives an object with the two fields:
+  /// * url – invoice link provided
+  /// * status – one of the invoice statuses:
+  ///     - paid – invoice was paid successfully,
+  ///     - cancelled – user closed this invoice without paying,
+  ///     - failed – user tried to pay, but the payment was failed,
+  ///     - pending – the payment is still processing. The bot will receive a
+  ///       service message about a successful payment when the payment is
+  ///       successfully paid.
+  ///
+  /// Support in Bot API >= 6.1+
+  /// {@endtemplate}
+  invoiceClosed,
+
+  /// {@template event_type_popup_closed}
+  /// Occurrs when the opened popup is closed.
+  ///
+  /// The `eventHandler` receives an object with the single field
+  /// button_id – the value of the field id of the pressed button.
+  /// If no buttons were pressed, the field button_id will be null.
+  ///
+  /// Support in Bot API >= 6.2+
+  /// {@endtemplate}
+  popupClosed,
+
+  /// {@template event_type_qr_text_received}
+  /// Occurs when the QR code scanner catches a code with text data.
+  ///
+  /// The eventHandler receives an object with the single field data
+  /// containing text data from the QR code.
+  ///
+  /// Support in Bot API >= 6.4+
+  /// {@endtemplate}
+  qrTextReceived,
+
+  /// {@template event_type_clipboard_text_received}
+  /// Occurrs when the readTextFromClipboard method is called.
+  ///
+  /// The `eventHandler`Ï receives an object with the single field data
+  /// containing text data from the clipboard. If the clipboard contains
+  /// non-text data, the field data will be an empty string.
+  /// If the Web App has no access to the clipboard, the field data will
+  /// be null.
+  ///
+  /// Support in Bot API >= 6.4+
+  /// {@endtemplate}
+  clipboardTextReceived,
 }
