@@ -21,6 +21,9 @@ abstract class WebAppJsImpl {
   external String get initData;
   external WebAppInitDataJsImpl get initDataUnsafe;
   external String get colorScheme;
+  external String get version;
+  external bool isVersionAtLeast(String version);
+  external String get platform;
   external ThemeParamsJsImpl get themeParams;
   external bool get isExpanded;
   external num get viewportHeight;

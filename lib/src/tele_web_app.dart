@@ -37,6 +37,12 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// Either “light” or “dark”.
   String get colorScheme => jsObject.colorScheme;
 
+  /// The version of the Bot API available in the user's Telegram app.
+  String get version => jsObject.version;
+
+  /// The name of the platform of the user's Telegram app.
+  String get platform => jsObject.platform;
+
   /// Containing the current theme settings used in the Telegram app.
   ThemeParams get themeParams => ThemeParams.fromJsObject(jsObject.themeParams);
 
@@ -114,16 +120,16 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// A method that sets the app header color.
   ///
   /// Support in Bot API >= 6.1+
-  void setHeaderColor(String color) {
-    jsObject.setHeaderColor(color);
-  }
+  void setHeaderColor(String color) => jsObject.setHeaderColor(color);
 
   /// A method that sets the app background color in the #RRGGBB format.
   ///
   /// Support in Bot API >= 6.1+
-  void setBackgroundColor(String color) {
-    jsObject.setBackgroundColor(color);
-  }
+  void setBackgroundColor(String color) => jsObject.setBackgroundColor(color);
+
+  /// Returns true if the user's app supports a version of the Bot API that
+  /// is equal to or higher than the version passed as the parameter.
+  bool isVersionAtLeast(String version) => jsObject.isVersionAtLeast(version);
 }
 
 /// {@template main_button}
