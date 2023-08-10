@@ -110,6 +110,20 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
 
   /// Close the Web App.
   void close() => jsObject.close();
+
+  /// A method that sets the app header color.
+  ///
+  /// Support in Bot API >= 6.1+
+  void setHeaderColor(String color) {
+    jsObject.setHeaderColor(color);
+  }
+
+  /// A method that sets the app background color in the #RRGGBB format.
+  ///
+  /// Support in Bot API >= 6.1+
+  void setBackgroundColor(String color) {
+    jsObject.setBackgroundColor(color);
+  }
 }
 
 /// {@template main_button}
@@ -223,6 +237,11 @@ class ThemeParams extends JsObjectWrapper<tele.ThemeParamsJsImpl> {
 
   /// Button text color in the #RRGGBB format.
   String? get buttonTextColor => jsObject.button_text_color;
+
+  /// Secondary background color in the #RRGGBB format.
+  ///
+  /// Support in Bot API >= 6.1+
+  String? get secondaryBgColor => jsObject.secondary_bg_color;
 }
 
 /// {@template webapp_init_data}

@@ -32,6 +32,8 @@ abstract class WebAppJsImpl {
   external void ready();
   external void expand();
   external void close();
+  external void setHeaderColor(String color);
+  external void setBackgroundColor(String color);
 }
 
 @JS()
@@ -100,6 +102,7 @@ abstract class ThemeParamsJsImpl {
     String? link_color,
     String? button_color,
     String? button_text_color,
+    String? secondary_bg_color,
   });
 
   external String? get bg_color;
@@ -108,6 +111,7 @@ abstract class ThemeParamsJsImpl {
   external String? get link_color;
   external String? get button_color;
   external String? get button_text_color;
+  external String? get secondary_bg_color;
 }
 
 @JS()
