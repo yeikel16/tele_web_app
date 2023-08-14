@@ -2,6 +2,7 @@ import 'package:js/js.dart' show allowInterop;
 
 import 'package:tele_web_app/src/interop/js_object_wrapper.dart';
 import 'package:tele_web_app/src/interop/web_app_interop.dart' as tele;
+import 'package:tele_web_app/src/utils/enums.dart';
 
 /// {@template tele_web_app}
 /// Allows communication between your bot and the Web App built in Flutter
@@ -177,6 +178,57 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   ///
   /// Support in Bot API >= 6.2+
   void disableClosingConfirmation() => jsObject.disableClosingConfirmation();
+
+  /// A method that inserts the bot's username and the specified inline
+  /// query in the current chat's input field.
+  ///
+  /// Query may be empty, in which case only the bot's username will be
+  /// inserted. If an optional [chatTypes] parameter was passed, the client
+  /// prompts the user to choose a specific chat, then opens that chat and
+  /// inserts the bot's username and the specified inline query in the input
+  /// field. You can specify which types of chats the user will be able to
+  /// choose from.
+  ///
+  /// It can be one or more of the following types: users, bots, groups,
+  /// channels.
+  ///
+  /// Support in Bot API >= 6.2+
+  void switchInlineQuery({String query = '', List<ChatTypes>? chatTypes}) {
+    assert(query.length > 256, 'Inline query is too long');
+
+    final types = chatTypes?.map((e) => e.name).toList();
+
+    return jsObject.switchInlineQuery(query, types);
+  }
+
+  /// A method that opens a link in an external browser.
+  ///
+  /// The Web App will not be closed.
+  /// Support in Bot API >= 6.4+
+  ///
+  /// If the optional [options] parameter is passed with the field
+  /// `{"try_instant_view": true}`, the link will be opened in **Instant View**
+  /// mode if possible.
+  void openLink({required String url, Map<String, dynamic>? options}) =>
+      jsObject.openLink(url, options);
+
+  ///	A method that opens a telegram link inside Telegram app.
+  ///
+  /// The Web App will be closed.
+  void openTelegramLink({required String url}) =>
+      jsObject.openTelegramLink(url);
+
+  ///	Bot API 6.1+ A method that opens an invoice using the link url.
+  ///
+  /// The Web App will receive the event [WebAppEventType.invoiceClosed] when
+  /// the invoice is closed.
+  ///
+  /// If an optional [callback] parameter was passed, the [callback] function
+  /// will be called and the invoice status will be passed as the first
+  /// argument.
+  void openInvoice({required String url, Function? callback}) {
+    jsObject.openInvoice(url, callback);
+  }
 }
 
 /// {@template main_button}
