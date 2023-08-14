@@ -40,6 +40,8 @@ abstract class WebAppJsImpl {
   external void setHeaderColor(String color);
   external void setBackgroundColor(String color);
   external bool isClosingConfirmationEnabled();
+  external void enableClosingConfirmation();
+  external void disableClosingConfirmation();
 }
 
 @JS()
@@ -53,7 +55,8 @@ abstract class MainButtonJsImpl {
     bool isActive,
     bool isProgressVisible,
     void Function(String text) setText,
-    void Function() onClick,
+    void Function(void Function() callback) onClick,
+    void Function() offClick,
     void Function() show,
     void Function() hide,
     void Function() enable,
@@ -72,6 +75,7 @@ abstract class MainButtonJsImpl {
   external void setText(String text);
   external void onClick(void Function() callback);
   external void offClick(void Function() callback);
+
   external void show();
   external void hide();
   external void enable();

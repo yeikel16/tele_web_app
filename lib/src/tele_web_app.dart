@@ -165,6 +165,18 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// Returns true if the user's app supports a version of the Bot API that
   /// is equal to or higher than the version passed as the parameter.
   bool isVersionAtLeast(String version) => jsObject.isVersionAtLeast(version);
+
+  /// A method that enables a confirmation dialog while the user is trying to
+  /// close the Web App.
+  ///
+  /// Support in Bot API >= 6.2+
+  void enableClosingConfirmation() => jsObject.enableClosingConfirmation();
+
+  /// A method that disables the confirmation dialog while the user is trying
+  /// to close the Web App.
+  ///
+  /// Support in Bot API >= 6.2+
+  void disableClosingConfirmation() => jsObject.disableClosingConfirmation();
 }
 
 /// {@template main_button}
