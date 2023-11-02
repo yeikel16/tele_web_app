@@ -2,6 +2,7 @@ import 'package:js/js.dart' show allowInterop;
 
 import 'package:tele_web_app/src/interop/js_object_wrapper.dart';
 import 'package:tele_web_app/src/interop/web_app_interop.dart' as tele;
+import 'package:tele_web_app/src/utils.dart';
 
 /// {@template tele_web_app}
 /// Allows communication between your bot and the Web App built in Flutter
@@ -53,10 +54,22 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// The height of the visible area of the Web App in its last stable state.
   double get viewportStableHeight => jsObject.viewportStableHeight.toDouble();
 
+  /// True, if the confirmation dialog is enabled while the user is trying to
+  /// close the Mini App.
+  ///
+  /// False, if the confirmation dialog is disabled.
+  bool get isClosingConfirmationEnabled =>
+      jsObject.isClosingConfirmationEnabled;
+
   /// An object for controlling the main button.
   ///
   /// Is displayed at the bottom of the Web App in the Telegram interface.
   MainButton get mainButton => MainButton.fromJsObject(jsObject.MainButton);
+
+  /// An object for controlling the back button.
+  ///
+  /// Can be displayed in the header of the Mini App in the Telegram interface.
+  BackButton get backButton => BackButton.fromJsObject(jsObject.BackButton);
 
   /// Sets the app event handler.
   ///
@@ -90,6 +103,89 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// This method is only available for Web Apps launched via a
   /// [Keyboard button](https://core.telegram.org/bots/webapps#keyboard-button-web-apps).
   void sendData(String data) => jsObject.sendData(data);
+
+  /// A method that opens a link in an external browser.
+  ///
+  /// The Mini App will not be closed.
+  ///
+  /// If the optional options parameter [tryInstantView] is passed with true
+  /// value, the link will be opened in
+  /// [Instant View](https://instantview.telegram.org/) mode if possible.
+  ///
+  /// Note that this method can be called only in response to user interaction
+  /// with the Mini App interface (e.g. a click inside the Mini App or
+  /// on the main button)
+  void openLink(String url, {bool? tryInstantView}) => jsObject.openLink(
+        url,
+        tryInstantView != null
+            ? tele.OpenLinkOptions(try_instant_view: tryInstantView)
+            : null,
+      );
+
+  /// A method that opens a telegram link inside Telegram app.
+  ///
+  /// The Mini App will be closed.
+  void openTelegramLink(String url) => jsObject.openTelegramLink(url);
+
+  /// A method that shows message in a simple alert with a 'Close' button.
+  ///
+  /// If an optional callback parameter was passed, the callback function will
+  /// be called when the popup is closed.
+  void showAlert(String message, [void Function()? callback]) =>
+      jsObject.showAlert(message, allowInteropOrNull(callback));
+
+  /// Show message in a simple confirmation window with 'OK'
+  /// and 'Cancel' buttons.
+  ///
+  /// If an optional callback parameter was passed, the callback function will
+  /// be called when the popup is closed and the first argument will be a
+  /// boolean indicating whether the user pressed the 'OK' button.
+  void showConfirm(String message,
+          [void Function(bool isConfirmed)? callback,]) =>
+      jsObject.showConfirm(message, allowInteropOrNull(callback));
+
+  /// Show a native popup for scanning a QR code.
+  ///
+  /// If an optional callback parameter was passed, the callback function will
+  /// be called and the text from the QR code will be passed as the first
+  /// argument. Returning true inside this callback function causes the popup to
+  /// be closed.
+  void showScanQrPopup(
+    ScanQrPopupParams params, [
+    bool? Function(String text)? callback,
+  ]) =>
+      jsObject.showScanQrPopup(params.jsObject, allowInteropOrNull(callback));
+
+  /// Close the native popup for scanning a QR code.
+  ///
+  /// Run it if you received valid data in the event qrTextReceived.
+  void closeScanQrPopup() => jsObject.closeScanQrPopup();
+
+  /// A method that requests text from the clipboard.
+  ///
+  /// The Mini App will receive the event clipboardTextReceived. If an optional
+  /// callback parameter was passed, the callback function will be called and
+  /// the text from the clipboard will be passed as the first argument.
+  void readTextFromClipboard([void Function(String text)? callback]) =>
+      jsObject.readTextFromClipboard(allowInteropOrNull(callback));
+
+  /// A method that shows a native popup requesting permission for the bot to
+  /// send messages to the user.
+  ///
+  /// If an optional callback parameter was passed, the callback function will
+  /// be called when the popup is closed and the first argument will be a
+  /// boolean indicating whether the user granted this access.
+  void requestWriteAccess([void Function(bool isGranted)? callback]) =>
+      jsObject.requestWriteAccess(allowInteropOrNull(callback));
+
+  /// A method that shows a native popup prompting the user for their phone
+  /// number.
+  ///
+  /// If an optional callback parameter was passed, the callback function will
+  /// be called when the popup is closed and the first argument will be a
+  /// boolean indicating whether the user shared its phone number.
+  void requestContact([void Function(bool isShared)? callback]) =>
+      jsObject.requestContact(allowInteropOrNull(callback));
 
   /// Informs the Telegram app that the Web App is ready to be displayed.
   ///
@@ -196,6 +292,37 @@ class MainButton extends JsObjectWrapper<tele.MainButtonJsImpl> {
       );
 }
 
+/// {@template back_button}
+/// It is responsible for controlling the back button.
+///
+/// Can be displayed in the header of the Mini App in the Telegram interface.
+/// {@endtemplate}
+class BackButton extends JsObjectWrapper<tele.BackButtonJsImpl> {
+  /// Wrap a JS object.
+  ///
+  /// {@macro back_button}
+  BackButton.fromJsObject(super.jsObject);
+
+  /// Shows whether the button is visible.
+  ///
+  /// Set to `false` by default.
+  bool get isVisible => jsObject.isVisible;
+
+  /// A method that sets the button press event handler.
+  void onClick(void Function() callback) =>
+      jsObject.onClick(allowInterop(callback));
+
+  /// A method that removes the button press event handler.
+  void offClick(void Function() callback) =>
+      jsObject.offClick(allowInterop(callback));
+
+  /// A method to make the button active and visible.
+  void show() => jsObject.show();
+
+  /// A method to hide the button.
+  void hide() => jsObject.hide();
+}
+
 /// {@template theme_params}
 /// Contains the user's current theme settings.
 ///
@@ -223,6 +350,9 @@ class ThemeParams extends JsObjectWrapper<tele.ThemeParamsJsImpl> {
 
   /// Button text color in the #RRGGBB format.
   String? get buttonTextColor => jsObject.button_text_color;
+
+  /// Secondary background color in the #RRGGBB format.
+  String? get secondaryBgColor => jsObject.secondary_bg_color;
 }
 
 /// {@template webapp_init_data}
@@ -309,6 +439,22 @@ class WebAppUser extends JsObjectWrapper<tele.WebAppUserJsImpl?> {
   /// The photo can be in .jpeg or .svg formats.
   /// Only returned for Web Apps launched from the attachment menu.
   String? get photoUrl => jsObject?.photo_url;
+}
+
+/// {@template scan_qr_popup_params}
+/// This object describes the native popup for scanning QR codes.
+/// {@endtemplate}
+class ScanQrPopupParams extends JsObjectWrapper<tele.ScanQrPopupParamsJsImpl> {
+  /// {@macro scan_qr_popup_params}
+  ScanQrPopupParams({String? text})
+      : super(tele.ScanQrPopupParamsJsImpl(text: text));
+
+  /// {@macro scan_qr_popup_params}
+  ScanQrPopupParams.fromJsObject(super.jsObject);
+
+  /// Optional. The text to be displayed under the 'Scan QR' heading, 0-64
+  /// characters.
+  String? get text => jsObject.text;
 }
 
 /// {@template webapp_event_type}
