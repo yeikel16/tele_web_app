@@ -1,3 +1,4 @@
+// ignore_for_file: avoid_positional_boolean_parameters
 import 'package:js/js.dart' show allowInterop;
 
 import 'package:tele_web_app/src/interop/js_object_wrapper.dart';

@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, non_constant_identifier_names, avoid_positional_boolean_parameters
 
 @JS('Telegram')
 library web_app;
@@ -37,8 +37,10 @@ abstract class WebAppJsImpl {
     String message, [
     void Function(bool isConfirmed)? callback,
   ]);
-  external void showScanQrPopup(ScanQrPopupParamsJsImpl params,
-      [bool? Function(String text)? callback,]);
+  external void showScanQrPopup(
+    ScanQrPopupParamsJsImpl params, [
+    bool? Function(String text)? callback,
+  ]);
   external void closeScanQrPopup();
   external void readTextFromClipboard([void Function(String text)? callback]);
   external void requestWriteAccess([void Function(bool isGranted)? callback]);
