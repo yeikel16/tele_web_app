@@ -42,6 +42,11 @@ abstract class WebAppJsImpl {
   external bool isClosingConfirmationEnabled();
   external void enableClosingConfirmation();
   external void disableClosingConfirmation();
+  external void switchInlineQuery(String query, List<String>? chatTypes);
+  external void openLink(String url, Map<String, dynamic>? options);
+  external void openTelegramLink(String url);
+  external void openInvoice(String url, Function? callback);
+  external void showPopup(PopupParamsJsImpl jsObject, Function? callback);
 }
 
 @JS()
@@ -166,4 +171,32 @@ abstract class WebAppUserJsImpl {
   external String? get language_code;
   external String? get photo_url;
   external bool? get is_premium;
+}
+
+@JS()
+@anonymous
+abstract class PopupParamsJsImpl {
+  external factory PopupParamsJsImpl({
+    String? title,
+    String message,
+    List<PopupButtonJsImpl>? buttons,
+  });
+
+  external String? get title;
+  external String get message;
+  external List<PopupButtonJsImpl>? get buttons;
+}
+
+@JS()
+@anonymous
+abstract class PopupButtonJsImpl {
+  external factory PopupButtonJsImpl({
+    String? id,
+    String type,
+    String? text,
+  });
+
+  external String? get id;
+  external String get type;
+  external String? get text;
 }

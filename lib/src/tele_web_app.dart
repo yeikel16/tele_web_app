@@ -2,6 +2,7 @@ import 'package:js/js.dart' show allowInterop;
 
 import 'package:tele_web_app/src/interop/js_object_wrapper.dart';
 import 'package:tele_web_app/src/interop/web_app_interop.dart' as tele;
+import 'package:tele_web_app/src/popup_button.dart';
 import 'package:tele_web_app/src/utils/enums.dart';
 
 /// {@template tele_web_app}
@@ -218,7 +219,7 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   void openTelegramLink({required String url}) =>
       jsObject.openTelegramLink(url);
 
-  ///	Bot API 6.1+ A method that opens an invoice using the link url.
+  /// A method that opens an invoice using the link url.
   ///
   /// The Web App will receive the event [WebAppEventType.invoiceClosed] when
   /// the invoice is closed.
@@ -226,9 +227,24 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// If an optional [callback] parameter was passed, the [callback] function
   /// will be called and the invoice status will be passed as the first
   /// argument.
+  ///
+  /// Support in Bot API >= 6.1+
   void openInvoice({required String url, Function? callback}) {
     jsObject.openInvoice(url, callback);
   }
+
+  /// A method that shows a native popup described by the [params] argument
+  /// of the type [PopupParams].
+  ///
+  /// The Web App will receive the event [WebAppEventType.popupClosed] when
+  /// the popup is closed.
+  /// If an optional [callback] parameter was passed, the [callback] function
+  /// will be called and the field id of the pressed button will be passed
+  /// as the first argument.
+  ///
+  /// Support in Bot API >= 6.2+
+  void showPopup({required PopupParams params, Function? callback}) =>
+      jsObject.showPopup(params.jsObject, callback);
 }
 
 /// {@template main_button}
