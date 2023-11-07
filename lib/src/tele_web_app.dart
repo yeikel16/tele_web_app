@@ -3,7 +3,7 @@ import 'package:js/js.dart' show allowInterop;
 
 import 'package:tele_web_app/src/interop/js_object_wrapper.dart';
 import 'package:tele_web_app/src/interop/web_app_interop.dart' as tele;
-import 'package:tele_web_app/src/utils.dart';
+import 'package:tele_web_app/src/utils/utils.dart';
 
 /// {@template tele_web_app}
 /// Allows communication between your bot and the Web App built in Flutter
