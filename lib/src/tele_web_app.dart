@@ -55,13 +55,6 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// The height of the visible area of the Web App in its last stable state.
   double get viewportStableHeight => jsObject.viewportStableHeight.toDouble();
 
-  /// True, if the confirmation dialog is enabled while the user is trying to
-  /// close the Mini App.
-  ///
-  /// False, if the confirmation dialog is disabled.
-  bool get isClosingConfirmationEnabled =>
-      jsObject.isClosingConfirmationEnabled;
-
   /// An object for controlling the main button.
   ///
   /// Is displayed at the bottom of the Web App in the Telegram interface.
@@ -104,29 +97,6 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// This method is only available for Web Apps launched via a
   /// [Keyboard button](https://core.telegram.org/bots/webapps#keyboard-button-web-apps).
   void sendData(String data) => jsObject.sendData(data);
-
-  /// A method that opens a link in an external browser.
-  ///
-  /// The Mini App will not be closed.
-  ///
-  /// If the optional options parameter [tryInstantView] is passed with true
-  /// value, the link will be opened in
-  /// [Instant View](https://instantview.telegram.org/) mode if possible.
-  ///
-  /// Note that this method can be called only in response to user interaction
-  /// with the Mini App interface (e.g. a click inside the Mini App or
-  /// on the main button)
-  void openLink(String url, {bool? tryInstantView}) => jsObject.openLink(
-        url,
-        tryInstantView != null
-            ? tele.OpenLinkOptions(try_instant_view: tryInstantView)
-            : null,
-      );
-
-  /// A method that opens a telegram link inside Telegram app.
-  ///
-  /// The Mini App will be closed.
-  void openTelegramLink(String url) => jsObject.openTelegramLink(url);
 
   /// A method that shows message in a simple alert with a 'Close' button.
   ///
@@ -351,9 +321,6 @@ class ThemeParams extends JsObjectWrapper<tele.ThemeParamsJsImpl> {
 
   /// Button text color in the #RRGGBB format.
   String? get buttonTextColor => jsObject.button_text_color;
-
-  /// Secondary background color in the #RRGGBB format.
-  String? get secondaryBgColor => jsObject.secondary_bg_color;
 }
 
 /// {@template webapp_init_data}
