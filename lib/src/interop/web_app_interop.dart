@@ -1,4 +1,5 @@
-// ignore_for_file: public_member_api_docs, non_constant_identifier_names, avoid_positional_boolean_parameters
+// ignore_for_file: public_member_api_docs, non_constant_identifier_names,
+// ignore_for_file: avoid_positional_boolean_parameters
 
 @JS('Telegram')
 library web_app;
@@ -20,6 +21,11 @@ abstract class WebAppJsImpl {
   external String get initData;
   external WebAppInitDataJsImpl get initDataUnsafe;
   external String get colorScheme;
+  external String get version;
+  external String get headerColor;
+  external String get backgroundColor;
+  external bool isVersionAtLeast(String version);
+  external String get platform;
   external ThemeParamsJsImpl get themeParams;
   external bool get isExpanded;
   external num get viewportHeight;
@@ -30,7 +36,7 @@ abstract class WebAppJsImpl {
   external void onEvent(String eventType, void Function() eventHandler);
   external void offEvent(String eventType, void Function() eventHandler);
   external void sendData(String data);
-  external void openLink(String url, [OpenLinkOptions? options]);
+  external void openLink(String url, [OpenLinkOptionsJsImpl? options]);
   external void openTelegramLink(String url);
   external void showAlert(String message, [void Function()? callback]);
   external void showConfirm(
@@ -48,6 +54,13 @@ abstract class WebAppJsImpl {
   external void ready();
   external void expand();
   external void close();
+  external void setHeaderColor(String color);
+  external void setBackgroundColor(String color);
+  external void enableClosingConfirmation();
+  external void disableClosingConfirmation();
+  external void switchInlineQuery(String query, List<String>? chatTypes);
+  external void openInvoice(String url, Function? callback);
+  external void showPopup(PopupParamsJsImpl jsObject, Function? callback);
 }
 
 @JS()
@@ -61,7 +74,8 @@ abstract class MainButtonJsImpl {
     bool isActive,
     bool isProgressVisible,
     void Function(String text) setText,
-    void Function() onClick,
+    void Function(void Function() callback) onClick,
+    void Function() offClick,
     void Function() show,
     void Function() hide,
     void Function() enable,
@@ -79,11 +93,12 @@ abstract class MainButtonJsImpl {
   external bool get isProgressVisible;
   external void setText(String text);
   external void onClick(void Function() callback);
+  external void offClick(void Function() callback);
+
   external void show();
   external void hide();
   external void enable();
   external void disable();
-  // ignore: avoid_positional_boolean_parameters
   external void showProgress(bool leaveActive);
   external void hideProgress();
   external void setParams(MainButtonParams params);
@@ -187,13 +202,42 @@ abstract class WebAppUserJsImpl {
   external String? get username;
   external String? get language_code;
   external String? get photo_url;
+  external bool? get is_premium;
 }
 
 @JS()
 @anonymous
-abstract class OpenLinkOptions {
-  external factory OpenLinkOptions({
-    bool? try_instant_view,
+abstract class PopupParamsJsImpl {
+  external factory PopupParamsJsImpl({
+    String? title,
+    String message,
+    List<PopupButtonJsImpl>? buttons,
+  });
+
+  external String? get title;
+  external String get message;
+  external List<PopupButtonJsImpl>? get buttons;
+}
+
+@JS()
+@anonymous
+abstract class PopupButtonJsImpl {
+  external factory PopupButtonJsImpl({
+    String? id,
+    String type,
+    String? text,
+  });
+
+  external String? get id;
+  external String get type;
+  external String? get text;
+}
+
+@JS()
+@anonymous
+abstract class OpenLinkOptionsJsImpl {
+  external factory OpenLinkOptionsJsImpl({
+    bool? tryInstantView,
   });
 
   external bool? get try_instant_view;

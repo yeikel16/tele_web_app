@@ -89,9 +89,9 @@ class _InfoTabViewState extends State<InfoTabView> {
                 MaterialButton(
                   color: Colors.blue,
                   onPressed: tele.close,
-                  child: IntrinsicWidth(
+                  child: const IntrinsicWidth(
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(Icons.close),
                         Text('close'),
                       ],
@@ -103,9 +103,9 @@ class _InfoTabViewState extends State<InfoTabView> {
                   onPressed: () {
                     tele.mainButton.hide();
                   },
-                  child: IntrinsicWidth(
+                  child: const IntrinsicWidth(
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(Icons.vertical_align_bottom_sharp),
                         Text('hide'),
                       ],
@@ -117,9 +117,9 @@ class _InfoTabViewState extends State<InfoTabView> {
                   onPressed: () {
                     tele.mainButton.enable();
                   },
-                  child: IntrinsicWidth(
+                  child: const IntrinsicWidth(
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(Icons.border_bottom),
                         Text('enable'),
                       ],
@@ -131,9 +131,9 @@ class _InfoTabViewState extends State<InfoTabView> {
                   onPressed: () {
                     tele.mainButton.disable();
                   },
-                  child: IntrinsicWidth(
+                  child: const IntrinsicWidth(
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(Icons.browser_not_supported_sharp),
                         Text('disable'),
                       ],
@@ -146,9 +146,9 @@ class _InfoTabViewState extends State<InfoTabView> {
                   onPressed: () {
                     tele.mainButton.show();
                   },
-                  child: IntrinsicWidth(
+                  child: const IntrinsicWidth(
                     child: Row(
-                      children: const [Icon(Icons.upload), Text('show')],
+                      children: [Icon(Icons.upload), Text('show')],
                     ),
                   ),
                 ),
@@ -163,9 +163,9 @@ class _InfoTabViewState extends State<InfoTabView> {
                       tele.mainButton.showProgress();
                     }
                   },
-                  child: IntrinsicWidth(
+                  child: const IntrinsicWidth(
                     child: Row(
-                      children: const [
+                      children: [
                         Icon(Icons.restart_alt_sharp),
                         Text('show loading')
                       ],
@@ -209,8 +209,7 @@ class _InfoTabViewState extends State<InfoTabView> {
 
 class ViewPortHight extends StatefulWidget {
   const ViewPortHight({
-    super.key,
-    required this.tele,
+    required this.tele, super.key,
   });
 
   final TeleWebApp tele;
