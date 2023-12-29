@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_positional_boolean_parameters
 import 'package:js/js.dart' show allowInterop;
 
+import 'package:tele_web_app/src/exceptions/exceptions.dart';
 import 'package:tele_web_app/src/interop/js_object_wrapper.dart';
 import 'package:tele_web_app/src/interop/web_app_interop.dart' as tele;
 import 'package:tele_web_app/src/popup_button.dart';
@@ -237,6 +238,10 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// is equal to or higher than the version passed as the parameter.
   bool isVersionAtLeast(String version) => jsObject.isVersionAtLeast(version);
 
+  /// Returns true if the user's app not supports a version of the Bot API that
+  /// is equal to or higher than the version passed as the parameter.
+  bool isNotVersionAtLast(String version) => !isVersionAtLeast(version);
+
   /// A method that enables a confirmation dialog while the user is trying to
   /// close the Web App.
   ///
@@ -279,17 +284,37 @@ class TeleWebApp extends JsObjectWrapper<tele.WebAppJsImpl> {
   /// If the optional [options] parameter is passed with the field
   /// `{"try_instant_view": true}`, the link will be opened in **Instant View**
   /// mode if possible.
-  void openLink({required String url, OpenLinkOptions? options}) =>
-      jsObject.openLink(
-        url,
-        tele.OpenLinkOptionsJsImpl(tryInstantView: options?.tryInstantView),
-      );
+  void openLink(String url, [OpenLinkOptions? options]) {
+    if (isNotVersionAtLast('6.4')) {
+      throw TelegramWebAppException('Only support in Bot API >= 6.4');
+    }
+
+    jsObject.openLink(
+      url,
+      tele.OpenLinkOptionsJsImpl(try_instant_view: options?.tryInstantView),
+    );
+  }
 
   ///	A method that opens a telegram link inside Telegram app.
   ///
   /// The Web App will be closed.
-  void openTelegramLink({required String url}) =>
+  void openTelegramLink(String url) {
+    try {
+      final telegramUrl = Uri.parse(url);
+
+      if (telegramUrl.origin != 'https://t.me' &&
+          telegramUrl.origin != 'http://t.me') {
+        throw InvalidUrlException.telegram(url);
+      }
+      if (isNotVersionAtLast('6.1')) {
+        throw TelegramWebAppException('Only support in Bot API >= 6.1');
+      }
+
       jsObject.openTelegramLink(url);
+    } catch (e) {
+      throw TelegramWebAppException(e.toString());
+    }
+  }
 
   /// A method that opens an invoice using the link url.
   ///
