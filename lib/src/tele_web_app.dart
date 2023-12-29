@@ -688,9 +688,9 @@ class OpenLinkOptions extends JsObjectWrapper<tele.OpenLinkOptionsJsImpl> {
   OpenLinkOptions({
     required this.tryInstantView,
   }) : super(
-          tele.OpenLinkOptionsJsImpl(tryInstantView: tryInstantView),
+          tele.OpenLinkOptionsJsImpl(try_instant_view: tryInstantView),
         );
 
-  ///
+  /// The link will be opened in Instant View mode if possible.
   final bool? tryInstantView;
 }
