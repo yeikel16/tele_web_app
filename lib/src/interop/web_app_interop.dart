@@ -1,4 +1,5 @@
-// ignore_for_file: public_member_api_docs, non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, non_constant_identifier_names,
+// ignore_for_file: avoid_positional_boolean_parameters
 
 @JS('Telegram')
 library web_app;
@@ -20,17 +21,46 @@ abstract class WebAppJsImpl {
   external String get initData;
   external WebAppInitDataJsImpl get initDataUnsafe;
   external String get colorScheme;
+  external String get version;
+  external String get headerColor;
+  external String get backgroundColor;
+  external bool isVersionAtLeast(String version);
+  external String get platform;
   external ThemeParamsJsImpl get themeParams;
   external bool get isExpanded;
   external num get viewportHeight;
   external num get viewportStableHeight;
+  external bool get isClosingConfirmationEnabled;
   external MainButtonJsImpl get MainButton;
+  external BackButtonJsImpl get BackButton;
   external void onEvent(String eventType, void Function() eventHandler);
   external void offEvent(String eventType, void Function() eventHandler);
   external void sendData(String data);
+  external void openLink(String url, [OpenLinkOptionsJsImpl? options]);
+  external void openTelegramLink(String url);
+  external void showAlert(String message, [void Function()? callback]);
+  external void showConfirm(
+    String message, [
+    void Function(bool isConfirmed)? callback,
+  ]);
+  external void showScanQrPopup(
+    ScanQrPopupParamsJsImpl params, [
+    bool? Function(String text)? callback,
+  ]);
+  external void closeScanQrPopup();
+  external void readTextFromClipboard([void Function(String text)? callback]);
+  external void requestWriteAccess([void Function(bool isGranted)? callback]);
+  external void requestContact([void Function(bool isShared)? callback]);
   external void ready();
   external void expand();
   external void close();
+  external void setHeaderColor(String color);
+  external void setBackgroundColor(String color);
+  external void enableClosingConfirmation();
+  external void disableClosingConfirmation();
+  external void switchInlineQuery(String query, List<String>? chatTypes);
+  external void openInvoice(String url, Function? callback);
+  external void showPopup(PopupParamsJsImpl jsObject, Function? callback);
 }
 
 @JS()
@@ -44,7 +74,8 @@ abstract class MainButtonJsImpl {
     bool isActive,
     bool isProgressVisible,
     void Function(String text) setText,
-    void Function() onClick,
+    void Function(void Function() callback) onClick,
+    void Function() offClick,
     void Function() show,
     void Function() hide,
     void Function() enable,
@@ -62,11 +93,12 @@ abstract class MainButtonJsImpl {
   external bool get isProgressVisible;
   external void setText(String text);
   external void onClick(void Function() callback);
+  external void offClick(void Function() callback);
+
   external void show();
   external void hide();
   external void enable();
   external void disable();
-  // ignore: avoid_positional_boolean_parameters
   external void showProgress(bool leaveActive);
   external void hideProgress();
   external void setParams(MainButtonParams params);
@@ -92,6 +124,24 @@ abstract class MainButtonParams {
 
 @JS()
 @anonymous
+abstract class BackButtonJsImpl {
+  external factory BackButtonJsImpl({
+    bool isVisible,
+    void Function() onClick,
+    void Function() offClick,
+    void Function() show,
+    void Function() hide,
+  });
+
+  external bool get isVisible;
+  external void onClick(void Function() callback);
+  external void offClick(void Function() callback);
+  external void show();
+  external void hide();
+}
+
+@JS()
+@anonymous
 abstract class ThemeParamsJsImpl {
   external factory ThemeParamsJsImpl({
     String? bg_color,
@@ -100,6 +150,7 @@ abstract class ThemeParamsJsImpl {
     String? link_color,
     String? button_color,
     String? button_text_color,
+    String? secondary_bg_color,
   });
 
   external String? get bg_color;
@@ -108,6 +159,7 @@ abstract class ThemeParamsJsImpl {
   external String? get link_color;
   external String? get button_color;
   external String? get button_text_color;
+  external String? get secondary_bg_color;
 }
 
 @JS()
@@ -150,4 +202,53 @@ abstract class WebAppUserJsImpl {
   external String? get username;
   external String? get language_code;
   external String? get photo_url;
+  external bool? get is_premium;
+}
+
+@JS()
+@anonymous
+abstract class PopupParamsJsImpl {
+  external factory PopupParamsJsImpl({
+    String? title,
+    String message,
+    List<PopupButtonJsImpl>? buttons,
+  });
+
+  external String? get title;
+  external String get message;
+  external List<PopupButtonJsImpl>? get buttons;
+}
+
+@JS()
+@anonymous
+abstract class PopupButtonJsImpl {
+  external factory PopupButtonJsImpl({
+    String? id,
+    String type,
+    String? text,
+  });
+
+  external String? get id;
+  external String get type;
+  external String? get text;
+}
+
+@JS()
+@anonymous
+abstract class OpenLinkOptionsJsImpl {
+  external factory OpenLinkOptionsJsImpl({
+    bool? try_instant_view,
+  });
+
+  external bool? get try_instant_view;
+}
+
+@JS()
+@anonymous
+abstract class ScanQrPopupParamsJsImpl {
+  external factory ScanQrPopupParamsJsImpl({
+    String? text,
+  });
+
+  external String? get text;
 }
